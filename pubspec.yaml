@@ -13,12 +13,18 @@ dependencies:
     sdk: flutter
   
   cupertino_icons: ^1.0.2
+  
+  # State management
+  mobx: ^2.2.0
+  flutter_mobx: ^2.1.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   
   flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  mobx_codegen: ^2.4.0 #flutter pub run build_runner watch --delete-conflicting-outputs
 
 flutter:
   uses-material-design: true

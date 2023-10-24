@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 const kAlertHeight = 80.0;
 
 enum AlertPriority {
-  error(2),
-  warning(1),
-  info(0);
+  error(2, Colors.red, "Oops, ocorreu um erro. Pedimos desculpas.", Icon(Icons.error)),
+  warning(1, Colors.amber, "Atenção! Você foi avisado.", Icon(Icons.warning)),
+  info(0, Colors.green, "Este é um aplicativo escrito em Flutter.", Icon(Icons.info));
 
-  const AlertPriority(this.value);
   final int value;
+  final Color backgroundColor;
+  final String message;
+  final Widget icon;
+  const AlertPriority(this.value, this.backgroundColor, this.message, this.icon);
 }
 
 class Alert extends StatelessWidget {
@@ -17,13 +20,11 @@ class Alert extends StatelessWidget {
     required this.backgroundColor,
     required this.child,
     required this.leading,
-    required this.priority,
   });
 
   final Color backgroundColor;
   final Widget child;
   final Widget leading;
-  final AlertPriority priority;
 
   @override
   Widget build(BuildContext context) {
