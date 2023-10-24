@@ -123,13 +123,13 @@ class AlertMessengerState extends State<AlertMessenger> with TickerProviderState
     super.dispose();
   }
 
-  void showAlert({required Alert alert}) {
+  Future<void> showAlert({required Alert alert}) async {
     setState(() => alertWidget = alert);
-    controller.forward();
+    await controller.forward();
   }
 
-  void hideAlert() {
-    controller.reverse();
+  Future<void> hideAlert() async {
+    await controller.reverse();
   }
 
   @override

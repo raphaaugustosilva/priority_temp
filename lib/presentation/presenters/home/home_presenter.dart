@@ -6,34 +6,34 @@ class HomePresenter extends MobxHome {
   final List<({BuildContext context, AlertPriority alert})> _alertQueue = [];
   bool _isAlertShowing = false;
 
-  void addAlertToQueue(BuildContext context, AlertPriority alert) {
+  Future<void> addAlertToQueue(BuildContext context, AlertPriority alert) async {
     bool isAlertHigher = _alertQueue.where((e) => e.alert.value > alert.value).firstOrNull == null;
     bool isAlertIsQueue = _alertQueue.where((e) => e.alert.value == alert.value).firstOrNull != null;
 
     if (isAlertHigher) {
-      _showAlert(context, alert);
+      await _showAlert(context, alert);
     }
 
     if (!isAlertIsQueue) {
       _alertQueue.add((context: context, alert: alert));
       _alertQueue.sort((a, b) => b.alert.value.compareTo(a.alert.value));
-      _handleAlertExibition();
+      await _handleAlertExibition();
     }
   }
 
-  void _handleAlertExibition() {
+  Future<void> _handleAlertExibition() async {
     for (var item in _alertQueue) {
       if (!_isAlertShowing) {
-        _showAlert(item.context, item.alert);
+        await _showAlert(item.context, item.alert);
       }
     }
   }
 
-  void _showAlert(BuildContext context, AlertPriority alert) {
+  Future<void> _showAlert(BuildContext context, AlertPriority alert) async {
     setCurrentAlert(alert);
 
     _isAlertShowing = true;
-    AlertMessenger.of(context).showAlert(
+    await AlertMessenger.of(context).showAlert(
       alert: Alert(
         backgroundColor: currentAlert!.backgroundColor,
         leading: currentAlert!.icon,
@@ -42,10 +42,10 @@ class HomePresenter extends MobxHome {
     );
   }
 
-  void hideAlert(BuildContext context) {
+  Future<void> hideAlert(BuildContext context) async {
     var alert = _alertQueue.where((e) => e.alert.value == currentAlert?.value).firstOrNull;
     if (alert != null) {
-      AlertMessenger.of(alert.context).hideAlert();
+      await AlertMessenger.of(alert.context).hideAlert();
 
       _alertQueue.remove(alert);
       setCurrentAlert(null);
