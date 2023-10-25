@@ -124,6 +124,7 @@ class AlertMessengerState extends State<AlertMessenger> with TickerProviderState
   }
 
   Future<void> showAlert({required Alert alert}) async {
+    if (controller.isCompleted) await controller.reverse();
     setState(() => alertWidget = alert);
     await controller.forward();
   }
